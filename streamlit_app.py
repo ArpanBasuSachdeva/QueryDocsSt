@@ -8,7 +8,7 @@ import json
 import uuid
 
 # Constants
-API_BASE_URL = os.getenv('API_BASE_URL', 'https://colt-pleasant-seagull.ngrok-free.app')  # Use environment variable with local fallback
+# API_BASE_URL = os.getenv('API_BASE_URL', 'https://colt-pleasant-seagull.ngrok-free.app')  # Use environment variable with local fallback
 UPLOAD_DIR = "CopyHaiJi//uploads"
 
 # Create directories if they don't exist
