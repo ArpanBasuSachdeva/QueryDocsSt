@@ -8,7 +8,7 @@ import json
 import uuid
 
 # Constants
-API_BASE_URL = os.getenv('API_BASE_URL', 'http://127.0.0.1:8000')  # Use environment variable with local fallback
+API_BASE_URL = os.getenv('API_BASE_URL', 'https://colt-pleasant-seagull.ngrok-free.app')  # Use environment variable with local fallback
 UPLOAD_DIR = "CopyHaiJi//uploads"
 
 # Create directories if they don't exist
@@ -35,7 +35,7 @@ if 'chat_history' not in st.session_state:
 # Helper functions
 def get_documents():
     try:
-        response = requests.get(f"{API_BASE_URL}/documents")
+        response = requests.get("https://colt-pleasant-seagull.ngrok-free.app/documents/")
         if response.status_code == 200:
             return response.json()["documents"]
         st.error(f"Failed to fetch documents: {response.status_code}")
@@ -46,7 +46,7 @@ def get_documents():
 
 def get_chat_history():
     try:
-        response = requests.get(f"{API_BASE_URL}/chat/history")
+        response = requests.get("https://colt-pleasant-seagull.ngrok-free.app/chat/history/")
         if response.status_code == 200:
             return response.json()["chat_history"]
         st.error(f"Failed to fetch chat history: {response.status_code}")
@@ -57,7 +57,7 @@ def get_chat_history():
 
 def get_exceptions():
     try:
-        response = requests.get(f"{API_BASE_URL}/api/exceptions/table")
+        response = requests.get("https://colt-pleasant-seagull.ngrok-free.app/api/exceptions/table/")
         if response.status_code == 200:
             return response.text
         st.error(f"Failed to fetch exceptions: {response.status_code}")
@@ -75,7 +75,7 @@ def send_chat_message(message, hash_code):
         })
         headers = {'Content-Type': 'application/json'}
         response = requests.post(
-            f"{API_BASE_URL}/chat",
+            "https://colt-pleasant-seagull.ngrok-free.app/chat/",
             data=payload,
             headers=headers
         )
@@ -94,7 +94,7 @@ def upload_document(file, chunk_size, chunk_overlap):
             "session_id": st.session_state.session_id
         }
         response = requests.post(
-            f"{API_BASE_URL}/upload-document",
+            "https://colt-pleasant-seagull.ngrok-free.app/upload-document/",
             files=files,
             params=params
         )
