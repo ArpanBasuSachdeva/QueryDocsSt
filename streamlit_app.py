@@ -8,7 +8,7 @@ import json
 import uuid
 
 # Constants
-API_BASE_URL = os.getenv('API_BASE_URL', 'http://127.0.0.1:8000')  # Use environment variable with local fallback
+API_BASE_URL = 'https://colt-pleasant-seagull.ngrok-free.app'  # Direct ngrok URL
 UPLOAD_DIR = "CopyHaiJi//uploads"
 
 # Create directories if they don't exist
@@ -35,10 +35,16 @@ if 'chat_history' not in st.session_state:
 # Helper functions
 def get_documents():
     try:
-        response = requests.get(f"{API_BASE_URL}/documents/")
+        response = requests.get(f"{API_BASE_URL}/documents/", timeout=10)  # Added timeout
         if response.status_code == 200:
             return response.json()["documents"]
         st.error(f"Failed to fetch documents: {response.status_code}")
+        return []
+    except requests.exceptions.ConnectionError:
+        st.error("Connection Error: Could not connect to the server. Please ensure the server is running and ngrok tunnel is active.")
+        return []
+    except requests.exceptions.Timeout:
+        st.error("Timeout Error: Server took too long to respond. Please try again.")
         return []
     except Exception as e:
         st.error(f"Error fetching documents: {str(e)}")
